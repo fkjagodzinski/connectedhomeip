@@ -156,7 +156,7 @@ config("strict_warnings") {
   cflags = [
     "-Wall",
     "-Wextra",
-    "-Wshadow",
+    # "-Wshadow",
   ]
 
   cflags_cc = [ "-Wnon-virtual-dtor" ]
