@@ -97,7 +97,7 @@ inline bool ConnectivityManagerImpl::_HaveServiceConnectivity(void)
 
 inline CHIP_ERROR ConnectivityManagerImpl::_Init(void)
 {
-    return CHIP_ERROR_UNSUPPORTED_CHIP_FEATURE;
+    return CHIP_NO_ERROR;
 }
 
 inline void ConnectivityManagerImpl::_OnPlatformEvent(const ChipDeviceEvent * event) {}
