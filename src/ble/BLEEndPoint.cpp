@@ -52,6 +52,7 @@
 
 // Define below to enable extremely verbose, BLE end point-specific debug logging.
 #undef CHIP_BLE_END_POINT_DEBUG_LOGGING_ENABLED
+#define CHIP_BLE_END_POINT_DEBUG_LOGGING_ENABLED
 
 #ifdef CHIP_BLE_END_POINT_DEBUG_LOGGING_ENABLED
 #define ChipLogDebugBleEndPoint(MOD, MSG, ...) ChipLogError(MOD, MSG, ## __VA_ARGS__)
@@ -633,12 +634,12 @@ void BLEEndPoint::QueueTx(PacketBufferHandle && data, PacketType_t type)
     if (mSendQueue.IsNull())
     {
         mSendQueue = std::move(data);
-        ChipLogDebugBleEndPoint(Ble, "%s: Set data as new mSendQueue %p, type %d", __FUNCTION__, mSendQueue, type);
+        ChipLogDebugBleEndPoint(Ble, "%s: Set data as new mSendQueue %p, type %d", __FUNCTION__, &mSendQueue, type);
     }
     else
     {
         mSendQueue->AddToEnd(std::move(data));
-        ChipLogDebugBleEndPoint(Ble, "%s: Append data to mSendQueue %p, type %d", __FUNCTION__, mSendQueue, type);
+        ChipLogDebugBleEndPoint(Ble, "%s: Append data to mSendQueue %p, type %d", __FUNCTION__, &mSendQueue, type);
     }
 
     QueueTxUnlock();
@@ -994,7 +995,7 @@ BLE_ERROR BLEEndPoint::DriveSending()
     {
 #ifdef CHIP_BLE_END_POINT_DEBUG_LOGGING_ENABLED
         if (mRemoteReceiveWindowSize <= BTP_WINDOW_NO_ACK_SEND_THRESHOLD &&
-            !GetFlag(mTimerStateFlags, kTimerState_SendAckTimerRunning) && mAckToSend == NULL)
+            !GetFlag(mTimerStateFlags, kTimerState_SendAckTimerRunning) && mAckToSend.IsNull())
         {
             ChipLogDebugBleEndPoint(Ble, "NO SEND: receive window almost closed, and no ack to send");
         }
@@ -1013,6 +1014,7 @@ BLE_ERROR BLEEndPoint::DriveSending()
         // Can't send anything.
         ExitNow();
     }
+    ChipLogDebugBleEndPoint(Ble, "   probably something to send!");
 
     // Otherwise, let's see what we can send.
 
@@ -1066,6 +1068,7 @@ BLE_ERROR BLEEndPoint::DriveSending()
             // Nothing to send!
         }
     }
+    ChipLogDebugBleEndPoint(Ble, "   SENT, DONE!");
 
 exit:
     return err;

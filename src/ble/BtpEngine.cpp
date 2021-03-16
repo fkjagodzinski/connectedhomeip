@@ -40,6 +40,7 @@
 
 // Define below to enable extremely verbose BLE-specific debug logging.
 #undef CHIP_BTP_PROTOCOL_ENGINE_DEBUG_LOGGING_ENABLED
+#define CHIP_BTP_PROTOCOL_ENGINE_DEBUG_LOGGING_ENABLED
 
 #ifdef CHIP_BTP_PROTOCOL_ENGINE_DEBUG_LOGGING_ENABLED
 #define ChipLogDebugBtpEngine(MOD, MSG, ...) ChipLogError(MOD, MSG, ##__VA_ARGS__)

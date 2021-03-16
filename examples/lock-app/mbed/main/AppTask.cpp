@@ -95,6 +95,7 @@ int AppTask::Init()
         ConnectivityMgr().SetBLEAdvertisingEnabled(true);
     }
 #ifdef MBED_CONF_APP_DEVICE_NAME
+    ChipLogProgress(NotSpecified, "Setting a custom dev name.");
     ConnectivityMgr().SetBLEDeviceName(MBED_CONF_APP_DEVICE_NAME);
 #endif
 
@@ -104,6 +105,12 @@ int AppTask::Init()
     InitServer();
     ConfigurationMgr().LogDeviceConfig();
     PrintQRCode(chip::RendezvousInformationFlags::kBLE);
+
+    std::string QRCode;
+    if (GetQRCode(QRCode, chip::RendezvousInformationFlags::kBLE) == CHIP_NO_ERROR)
+    {
+        ChipLogProgress(NotSpecified, "You can also execute \"qrencode -l H -t UTF8 '%s'\" on your pc", QRCode.c_str());
+    }
 
     return 0;
 }

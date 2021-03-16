@@ -381,7 +381,27 @@ struct CHIPService : public ble::GattServer::EventHandler
         ChipLogDetail(DeviceLayer, "GATT %s, connHandle=%d, attHandle=%d", __FUNCTION__, params->connHandle, params->handle);
         if (params->handle == mRxHandle)
         {
-            ChipLogDetail(DeviceLayer, "Received BLE packet on RX");
+            ChipLogDetail(DeviceLayer, "Received BLE packet on RX, len=%d", params->len);
+            //
+            const int max_msg_str_len     = 255;
+            int buff_left                 = max_msg_str_len - 1;
+            char msg_str[max_msg_str_len] = {};
+            char * buff                   = msg_str;
+            int num_chars                 = 0;
+
+            for (size_t i = 0; i < params->len; i++)
+            {
+                num_chars = snprintf(buff, buff_left, "%02hhx ", params->data[i]);
+                if (num_chars >= buff_left || num_chars < 0)
+                {
+                    *buff = 'X';
+                    break;
+                }
+                buff += num_chars;
+                buff_left -= num_chars;
+            }
+            ChipLogDetail(DeviceLayer, "data='%s'", msg_str);
+            //
 
             // Allocate a buffer, copy the data. They will be passed into the event
             auto buf = System::PacketBufferHandle::NewWithData(params->data, params->len);
