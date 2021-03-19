@@ -299,14 +299,14 @@
             "id": "mbedTarget",
             "description": "What mbed target will be used?",
             "options": ["NRF52840_DK", "DISCO_L475VG_IOT01A"],
-            "default": "NRF52840_DK"
+            "default": "DISCO_L475VG_IOT01A"
         },
         {
             "type": "pickString",
             "id": "mbedProfile",
             "description": "What mbed profile do you want to use?",
             "options": ["release", "debug", "develop"],
-            "default": "develop"
+            "default": "debug"
         }
     ]
 }

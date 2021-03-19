@@ -80,6 +80,8 @@ pwd
 BUILD_DIRECTORY="$APP"/mbed/build-"$TARGET_BOARD"/"$PROFILE"/
 MBED_CONFIG_PATH="$APP"/mbed/cmake_build/"$TARGET_BOARD"/develop/"$TOOLCHAIN"/
 
+rm ${BUILD_DIRECTORY}chip-mbed-${APP}*
+
 # Create symlink to /opt/mbed-os directory
 ln -sfT $MBED_OS_PATH "${APP}/mbed/mbed-os"
 
