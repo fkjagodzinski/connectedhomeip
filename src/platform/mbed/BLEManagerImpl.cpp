@@ -753,7 +753,8 @@ CHIP_ERROR BLEManagerImpl::StartAdvertising(void)
     ble::AdvertisingParameters adv_params(adv_type, adv_interval, adv_interval);
 
     // Change own address type from RANDOM to PUBLIC.
-    adv_params.setOwnAddressType(ble::own_address_type_t::PUBLIC);
+    // XXX THIS BREAKS PAIRING!
+    // adv_params.setOwnAddressType(ble::own_address_type_t::PUBLIC);
 
     // Restart advertising if already active.
     if (gap.isAdvertisingActive(ble::LEGACY_ADVERTISING_HANDLE))
