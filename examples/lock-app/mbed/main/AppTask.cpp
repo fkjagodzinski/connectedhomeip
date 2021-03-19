@@ -95,7 +95,6 @@ int AppTask::Init()
         ConnectivityMgr().SetBLEAdvertisingEnabled(true);
     }
 #ifdef MBED_CONF_APP_DEVICE_NAME
-    ChipLogProgress(NotSpecified, "Setting a custom dev name.");
     ConnectivityMgr().SetBLEDeviceName(MBED_CONF_APP_DEVICE_NAME);
 #endif
 
