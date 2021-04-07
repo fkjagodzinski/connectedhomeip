@@ -291,6 +291,24 @@
                     "${workspaceFolder}/examples/lock-app/mbed/build"
                 ]
             }
+        },
+        {
+            "label": "Build and flash Mbed tests",
+            "type": "shell",
+            "command": "scripts/tests/mbed_tests.sh",
+            "args": [
+                "-b=${input:mbedTarget}",
+                "-p=${input:mbedProfile}",
+                "-m=${input:testsBuildMode}"
+            ],
+            "group": "build",
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/examples/lock-app/mbed/build"
+                ]
+            }
         }
     ],
     "inputs": [
@@ -309,6 +327,13 @@
             "options": ["release", "debug", "develop"],
             // "default": "develop"
             "default": "debug"
+        },
+        {
+            "type": "pickString",
+            "id": "testsBuildMode",
+            "description": "Do you want to build, flash or both?",
+            "options": ["build", "build_flash", "flash_only"],
+            "default": "build"
         }
     ]
 }
